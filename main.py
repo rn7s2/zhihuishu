@@ -1,12 +1,19 @@
 import datetime
+import sys
 import time
+
 import pyautogui
+
 import util
+
+minTarget = 25
+if len(sys.argv) > 1:
+    minTarget = int(sys.argv[1])
 
 util.moveToMenu()
 
 watchedSecs = 0
-while watchedSecs < 28 * 60:
+while watchedSecs < minTarget * 60:
     selected = False
 
     lst = list(pyautogui.locateAllOnScreen("assets/vidBtn.png"))
