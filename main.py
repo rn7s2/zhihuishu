@@ -6,7 +6,7 @@ import pyautogui
 
 import util
 
-minTarget = 25
+minTarget = 27
 if len(sys.argv) > 1:
     minTarget = int(sys.argv[1])
 
