@@ -35,10 +35,43 @@ while watchedSecs < 28 * 60:
         util.startPlayVideo()
         util.moveToMenu()
 
-        finishTime = datetime.datetime.now() + datetime.timedelta(seconds=vidSecs + 60)
+        finishTime = datetime.datetime.now() + datetime.timedelta(seconds=vidSecs + 30)
         print(f"start watching video, will finish at {finishTime}")
 
         while datetime.datetime.now() < finishTime:
+            try:
+                if pyautogui.locateOnScreen("assets/binaryQuiz.png") != None:
+                    print("quiz (binary)")
+                    btns = list(pyautogui.locateAllOnScreen("assets/binaryQuizBtn.png"))
+                    for btn in btns:
+                        pyautogui.click(
+                            btn.left + 10,
+                            btn.top + 5,
+                            duration=util.moveDuration(),
+                            tween=pyautogui.easeInOutQuad,
+                        )
+                        time.sleep(0.2)
+
+                        try:
+                            if (
+                                pyautogui.locateOnScreen("assets/singleQuizPass.png")
+                                != None
+                            ):
+                                print("quiz pass, close")
+                                util.closeSingleQuiz()
+                                time.sleep(0.5)
+                                util.startPlayVideo()
+                                util.moveToMenu()
+
+                                break
+                        except:
+                            print("wrong answer")
+                            time.sleep(0.2)
+                            continue
+
+            except:
+                pass
+
             try:
                 if pyautogui.locateOnScreen("assets/singleQuiz.png") != None:
                     print("quiz (single)")
@@ -68,8 +101,11 @@ while watchedSecs < 28 * 60:
                             print("wrong answer")
                             time.sleep(0.2)
                             continue
+            except:
+                pass
 
-                elif pyautogui.locateOnScreen("assets/multiQuiz.png") != None:
+            try:
+                if pyautogui.locateOnScreen("assets/multiQuiz.png") != None:
                     print("quiz (multi)")
                     btns = list(
                         pyautogui.locateAllOnScreen("assets/multiQuizOption.png")
