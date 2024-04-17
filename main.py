@@ -58,6 +58,7 @@ while watchedSecs < 28 * 60:
                             ):
                                 print("quiz pass, close")
                                 util.closeSingleQuiz()
+                                time.sleep(0.5)
                                 util.startPlayVideo()
 
                                 break
@@ -72,6 +73,7 @@ while watchedSecs < 28 * 60:
 
             time.sleep(3)
 
+        watchedSecs += vidSecs
         break
 
     if not selected:
