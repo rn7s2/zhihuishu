@@ -51,7 +51,8 @@ while watchedSecs < 28 * 60:
             # else if 
 
             time.sleep(3)
-    
+
+        watchedSecs += vidSecs
         break
     
     if not selected:
