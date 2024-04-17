@@ -33,6 +33,7 @@ while watchedSecs < 28 * 60:
         )
         time.sleep(3)
         util.startPlayVideo()
+        util.moveToMenu()
 
         finishTime = datetime.datetime.now() + datetime.timedelta(seconds=vidSecs + 60)
         print(f"start watching video, will finish at {finishTime}")
@@ -60,16 +61,57 @@ while watchedSecs < 28 * 60:
                                 util.closeSingleQuiz()
                                 time.sleep(0.5)
                                 util.startPlayVideo()
+                                util.moveToMenu()
 
                                 break
                         except:
                             print("wrong answer")
                             time.sleep(0.2)
                             continue
+
+                elif pyautogui.locateOnScreen("assets/multiQuiz.png") != None:
+                    print("quiz (multi)")
+                    btns = list(
+                        pyautogui.locateAllOnScreen("assets/multiQuizOption.png")
+                    )
+                    for btn in btns:
+                        pyautogui.click(
+                            btn.left + 5,
+                            btn.top + 5,
+                            duration=util.moveDuration(),
+                            tween=pyautogui.easeInOutQuad,
+                        )
+                        time.sleep(0.2)
+
+                        right = False
+                        wrong = False
+                        try:
+                            right = (
+                                pyautogui.locateOnScreen("assets/singleQuizPass.png")
+                                != None
+                            )
+                        except:
+                            pass
+
+                        try:
+                            wrong = (
+                                pyautogui.locateOnScreen("assets/multiQuizWrong.png")
+                                != None
+                            )
+                        except:
+                            pass
+
+                        if right or wrong:
+                            print("multi quiz completed, close")
+                            util.closeSingleQuiz()
+                            time.sleep(0.5)
+                            util.startPlayVideo()
+                            util.moveToMenu()
+
+                            break
+
             except:
                 pass
-
-            # else if
 
             time.sleep(3)
 
@@ -78,3 +120,7 @@ while watchedSecs < 28 * 60:
 
     if not selected:
         util.scrollDownVidsList()
+
+    print(f"watched {watchedSecs} seconds")
+
+util.backHome()
